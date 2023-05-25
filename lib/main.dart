@@ -4,28 +4,52 @@ void main() {
   runApp(MyApp());
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  int counter = 2;
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
-          title: Text('List'),
+          title: const Text('Dynamic state'),
         ),
-        body: ListView.builder(
-          // separatorBuilder: (context, index) {
-          //   return Divider();
-          // },
-          itemCount: 7,
-          itemBuilder: (context, index) {
-            return const ListTile(
-              title: Text('HAlooo'),
-              subtitle: Text('Good Morning !!'),
-              leading: CircleAvatar(),
-              trailing: Text('10:00 am'),
-              enabled: true,
-            );
-          },
+        body: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: <Widget>[
+            Text(
+              counter.toString(),
+              style: TextStyle(fontSize: 20 + counter.toDouble()),
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                ElevatedButton(
+                  onPressed: () {
+                    if (counter >= 1) {
+                      setState(() {
+                        counter--;
+                      });
+                    }
+                  },
+                  child: Icon(Icons.remove),
+                ),
+                ElevatedButton(
+                  onPressed: () {
+                    setState(() {
+                      counter++;
+                    });
+                  },
+                  child: Icon(Icons.add),
+                )
+              ],
+            )
+          ],
         ),
       ),
     );
